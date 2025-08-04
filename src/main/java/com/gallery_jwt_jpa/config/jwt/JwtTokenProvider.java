@@ -10,7 +10,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -51,19 +53,18 @@ public class JwtTokenProvider {
         try {
             return objectMapper.writeValueAsString(jwtUser);
         } catch (JsonProcessingException e) {
-//            TODO: 예외처리
-            return null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "토큰 생성 에러");
+
         }
     }
 
     public JwtUser getJwtUserFromToken(String token) {
+        try {
         Claims claims = getClaims(token);
         String json = claims.get(constJwt.getClaimKey(), String.class);
-        try {
             return objectMapper.readValue(json, JwtUser.class);
         } catch (JsonProcessingException e) {
-            // TODO: 예외처리
-            return null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "토큰에 문제");
         }
     }
 

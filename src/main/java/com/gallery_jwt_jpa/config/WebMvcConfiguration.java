@@ -21,13 +21,5 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/pic/**").addResourceLocations("file:" + uploadPath);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-//                .allowedOrigins("*")
-                .allowedOriginPatterns("*")
-                .allowedMethods("*")
-                .allowCredentials(true);
-    }
 
 }

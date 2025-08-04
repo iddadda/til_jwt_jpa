@@ -29,7 +29,7 @@ public class WebSecurityConfiguration {
 
     //    Bean 메소드
     @Bean
-    public SecurityFilterChain SecurityFilterChain(HttpSecurity http, TokenAuthenticationFilter tokenAuthenticationFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, TokenAuthenticationFilter tokenAuthenticationFilter) throws Exception {
 //        람다식
 //        쓸데없는 리소스를 잡아 먹는걸 방지하기 위한 기본 설정이라 생각하면 됨
         return http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //security가 session을 사용하지 말아라
@@ -40,7 +40,7 @@ public class WebSecurityConfiguration {
 //                여기서부터 진짜
 
 //                cors 설정
-                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
+                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource())) // ⭐️⭐️⭐️
 
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/cart").authenticated()
                         .requestMatchers("/api/v1/order").authenticated()
@@ -52,10 +52,11 @@ public class WebSecurityConfiguration {
                 .build();
     }
 
-    //    CORS 설정(중요!)
+    // ⭐️ CORS 설정
     CorsConfigurationSource corsConfigurationSource() {
         return request -> {
             CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedHeaders(Collections.singletonList("*"));
             config.setAllowedMethods(Collections.singletonList("*"));
             config.setAllowedOriginPatterns(Collections.singletonList("*")); // ⭐️ 허용할 origin
             config.setAllowCredentials(true);
