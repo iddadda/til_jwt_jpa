@@ -8,6 +8,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
 
 @Configuration              // 빈등록, Bean 메소드가 있다.
 @RequiredArgsConstructor
@@ -34,12 +38,28 @@ public class WebSecurityConfiguration {
                 .csrf(csrfSpec -> csrfSpec.disable()) // BE: csrf 라는 공격이 있는데 공격을 막는것이 기본으로 활성화 되어 있다.
                                                                                 // 세션을 이용한 공격. 세션을 어차피 안 쓰니까 비활성화
 //                여기서부터 진짜
+
+//                cors 설정
+                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
+
                 .authorizeHttpRequests(req -> req.requestMatchers("/api/v1/cart").authenticated()
+                        .requestMatchers("/api/v1/order").authenticated()
                         .requestMatchers(HttpMethod.POST,"/api/v1/item").hasRole("USER_2")  // "해당 주소에서 post로 들어 왔을 때만 로그인 해야 된다." 라는 의미
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(e -> e.authenticationEntryPoint(tokenAuthenticationEntryPoint))
                 .build();
+    }
+
+    //    CORS 설정(중요!)
+    CorsConfigurationSource corsConfigurationSource() {
+        return request -> {
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedMethods(Collections.singletonList("*"));
+            config.setAllowedOriginPatterns(Collections.singletonList("*")); // ⭐️ 허용할 origin
+            config.setAllowCredentials(true);
+            return config;
+        };
     }
 }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Getter
 public class UserPrincipal implements UserDetails {
     private final int memberId;
-    private final Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;  // 인증 권한
 
     public UserPrincipal(int memberId, List<String> roles) {
         this.memberId = memberId;
