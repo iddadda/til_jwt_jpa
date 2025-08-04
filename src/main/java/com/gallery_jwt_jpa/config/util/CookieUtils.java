@@ -36,7 +36,7 @@ public class CookieUtils {
                 }
             }
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "인증 문제 발생");
+        return null;
     }
 
     public void deleteCookie(HttpServletResponse response,String name, String path) {

@@ -5,6 +5,7 @@ import com.gallery_jwt_jpa.cart.model.CartGetRes;
 import com.gallery_jwt_jpa.cart.model.CartPostReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,7 +22,7 @@ public class CartService {
         try {
 
         return cartMapper.save(req);
-        }  catch (Exception e) {
+        }  catch (DuplicateKeyException e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 카트에 등록되어 있습니다.");
         }

@@ -12,7 +12,7 @@
     <select id="findAllByOrderId">
         SELECT b.id, b.name, b.img_path, b.price, b.discount_per
         FROM order_items a JOIN items b
-        ON a.item_id AND b.id
+        ON a.item_id = b.id
         WHERE a.order_id = #{orderId}
     </select>
 </mapper>
