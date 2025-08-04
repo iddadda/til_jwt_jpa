@@ -22,8 +22,8 @@ public class JwtTokenManager {
     private final JwtTokenProvider jwtTokenProvider;   // 토큰 만들 수 있는 필드
 
     public void issue(HttpServletResponse response, JwtUser jwtUser) {
-        setAccessTokenInCookie(response, jwtUser);
-        setRefreshTokenInCookie(response, jwtUser);
+        setAccessTokenInCookie(response, jwtUser); // 15분으로 설정함 // 실제 인증시 사용하는 토큰
+        setRefreshTokenInCookie(response, jwtUser); // 15일로 설정함  // 토큰 재발행시 사용하는 토큰
     }
 
     public String generateAccessToken(JwtUser jwtUser) {

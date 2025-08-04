@@ -14,7 +14,6 @@
         SELECT id, login_pw
         FROM members
         WHERE login_id = #{loginId}
-        OR login_pw = #{loginPw}
     </select>
 
 <!--    로그인한 사용자 권한 가져오기-->

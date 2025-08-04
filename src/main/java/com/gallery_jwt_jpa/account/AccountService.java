@@ -33,10 +33,14 @@ public class AccountService {
             return null;
         }
 //        로그인 성공!
-//        로그인 한 사용자의 role 가져오기
+//        로그인 한 사용자의 role(권한) 가져오기
         List<String> roles = accountMapper.findAllRolesByMemberId(res.getId());
+//        jwtUser 가 토큰을 생성함 (이름이 jwtUser일 필요가 없음 . 담기는 값은 pk값이랑 role 값)
+//        권한이 필요없으면 이것도 필요없음 (단, 인가처리는 대부분 필요한 기능임)
         JwtUser jwtUser = new JwtUser(res.getId(), roles);
+//        객체에 주소값 넣고
         res.setJwtUser(jwtUser);
+//        주소값 리턴
         return res;
     }
 }

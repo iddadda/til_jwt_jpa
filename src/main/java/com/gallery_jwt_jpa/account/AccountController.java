@@ -1,12 +1,12 @@
 package com.gallery_jwt_jpa.account;
 
-import com.gallery_jwt_jpa.config.jwt.JwtTokenManager;
-import jakarta.servlet.http.HttpServletRequest;
 import com.gallery_jwt_jpa.account.etc.AccountConstants;
 import com.gallery_jwt_jpa.account.model.AccountJoinReq;
 import com.gallery_jwt_jpa.account.model.AccountLoginReq;
 import com.gallery_jwt_jpa.account.model.AccountLoginRes;
+import com.gallery_jwt_jpa.config.jwt.JwtTokenManager;
 import com.gallery_jwt_jpa.config.util.HttpUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +52,13 @@ public class AccountController {
     public ResponseEntity<?> check(HttpServletRequest httpReq) {
         Integer id = (Integer)HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
         return ResponseEntity.ok(id);
+    }
+
+    //    재발행
+    @PostMapping("/reissue")
+    public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
+        jwtTokenManager.reissue(request, response);
+        return ResponseEntity.ok(1);
     }
 
     @PostMapping("/logout")
