@@ -48,11 +48,6 @@ public class AccountController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/check")
-    public ResponseEntity<?> check(HttpServletRequest httpReq) {
-        Integer id = (Integer)HttpUtils.getSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
-        return ResponseEntity.ok(id);
-    }
 
     //    재발행
     @PostMapping("/reissue")
@@ -62,8 +57,8 @@ public class AccountController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletRequest httpReq) {
-        HttpUtils.removeSessionValue(httpReq, AccountConstants.MEMBER_ID_NAME);
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        jwtTokenManager.logout(response);
         return ResponseEntity.ok(1);
     }
 }

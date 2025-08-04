@@ -41,7 +41,7 @@ public class JwtTokenManager {
 
     //    액세스 토큰 삭제
     public void deleteAccessTokenInCookie(HttpServletResponse response) {
-        cookieUtils.deleteCookie(response, constJwt.getAccessTokenCookieName());
+        cookieUtils.deleteCookie(response, constJwt.getAccessTokenCookieName(), constJwt.getAccessTokenCookiePath());
     }
 
 
@@ -59,7 +59,7 @@ public class JwtTokenManager {
 
     //    리프레시 토큰 삭제
     public void deleteRefreshTokenInCookie(HttpServletResponse response) {
-        cookieUtils.deleteCookie(response, constJwt.getRefreshTokenCookieName());
+        cookieUtils.deleteCookie(response, constJwt.getRefreshTokenCookieName(), constJwt.getRefreshTokenCookiePath());
     }
 
     public JwtUser getJwtUserFromToken(String token) {
@@ -97,6 +97,7 @@ public class JwtTokenManager {
         String accessToken = getAccessTokenFromCookie(request);
         if(accessToken == null) {return null;}
         JwtUser jwtUser = getJwtUserFromToken(accessToken);
+        if (jwtUser == null) {return null;}  // 앞에서 예외처리를 안 해줘서 임시로 넣은 코드
         UserPrincipal userPrincipal = new UserPrincipal(jwtUser.getSignedUserId(), jwtUser.getRoles());
         return new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
     }
