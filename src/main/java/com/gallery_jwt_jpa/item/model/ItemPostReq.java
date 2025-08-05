@@ -1,16 +1,16 @@
 package com.gallery_jwt_jpa.item.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
-@AllArgsConstructor
-public class ItemGetRes {
-    private long id;
+public class ItemPostReq {
+//    private long id;
     private String name;
-    private String imgPath;
+//    private String imgPath;
     private int price;
     private int discountPer;
 }

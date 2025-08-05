@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderItemPostDto {
     private int orderId;
-    private List<Integer> itemIds;
+    private List<Long> itemIds;
 }
 

@@ -28,6 +28,7 @@ spring:
   jpa:
     database: mysql
     hibernate:
+     #ddl-auto: update #테이블은 없는데 entity가 존재하면 create 한다.
       ddl-auto: create #프로젝트 실행시마다 테이블 drop 후 다시 create
     properties:
       hibernate:
@@ -35,6 +36,14 @@ spring:
           batch_size: 20
         format_sql: true #쿼리문 로그를 찍어줄 때 보기 편하게 포맷됨
         order_updates: true
+        show_sql: true
+    defer-datasource-initialization: true
+  servlet:
+    multipart:
+      max-file-size: 15MB
+  sql:
+    init:
+      mode: always
 
 mybatis:
   mapper-locations: mappers/**/*.xml

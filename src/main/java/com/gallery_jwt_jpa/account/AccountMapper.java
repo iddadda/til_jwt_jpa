@@ -11,6 +11,6 @@ import java.util.List;
 public interface AccountMapper {
    int save(AccountJoinReq req);
    AccountLoginRes findByLoginId(AccountLoginReq req);
-   List<String> findAllRolesByMemberId(int memberId);
+   List<String> findAllRolesByMemberId(long memberId);
 
 }

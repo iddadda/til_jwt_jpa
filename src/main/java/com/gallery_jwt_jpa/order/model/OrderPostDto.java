@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 public class OrderPostDto { // orders 테이블에 데이터를 넣어주는 용도
     private int orderId;
-    private int memberId;
+    private long memberId;
     private String name;
     private String address;
     private String payment;

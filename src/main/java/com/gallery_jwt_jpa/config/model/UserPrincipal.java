@@ -8,14 +8,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class UserPrincipal implements UserDetails {
-    private final int memberId;
+    private final long memberId;
     private final Collection<? extends GrantedAuthority> authorities;  // 인증 권한
 
-    public UserPrincipal(int memberId, List<String> roles) {
+    public UserPrincipal(long memberId, List<String> roles) {
         this.memberId = memberId;
 //        방법1
         List<SimpleGrantedAuthority> list = new ArrayList<>();
@@ -28,10 +27,6 @@ public class UserPrincipal implements UserDetails {
     }
 
     //    권한
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
 
     @Override
     public String getPassword() {

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountLoginRes {
-    private int id;
+    private long id;
 
 //    json 생성 시 loginPw는 제외됨
     @JsonIgnore

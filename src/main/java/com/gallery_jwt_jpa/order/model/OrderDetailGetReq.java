@@ -9,5 +9,5 @@ import lombok.Getter;
 @Builder
 public class OrderDetailGetReq {
     private int orderId;
-    private int memberId;
+    private long memberId;
 }

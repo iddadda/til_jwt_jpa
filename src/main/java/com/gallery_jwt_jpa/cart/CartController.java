@@ -24,8 +24,8 @@ public class CartController {
     public ResponseEntity<?> save(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody CartPostReq req) {
         log.info("req: {}", req);
         req.setMemberId(userPrincipal.getMemberId());
-        int result = cartService.save(req);
-        return ResponseEntity.ok(result);
+        cartService.save(req);
+        return ResponseEntity.ok(1);
     }
 
 //    상품 목록 조회
