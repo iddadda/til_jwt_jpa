@@ -21,11 +21,20 @@ spring:
   application:
     name: gallery
   datasource:
-    url: jdbc:log4jdbc:mariadb://localhost/gallery
+    url: jdbc:log4jdbc:mariadb://localhost/gallery_jpa
     username: root
     password: green502
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create #프로젝트 실행시마다 테이블 drop 후 다시 create
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 20
+        format_sql: true #쿼리문 로그를 찍어줄 때 보기 편하게 포맷됨
+        order_updates: true
 
 mybatis:
   mapper-locations: mappers/**/*.xml

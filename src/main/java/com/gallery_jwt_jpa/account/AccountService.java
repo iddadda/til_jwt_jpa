@@ -4,11 +4,15 @@ import com.gallery_jwt_jpa.account.model.AccountJoinReq;
 import com.gallery_jwt_jpa.account.model.AccountLoginReq;
 import com.gallery_jwt_jpa.account.model.AccountLoginRes;
 import com.gallery_jwt_jpa.config.model.JwtUser;
+import com.gallery_jwt_jpa.entity.Members;
+import com.gallery_jwt_jpa.entity.MembersRoles;
+import com.gallery_jwt_jpa.entity.MembersRolesIds;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -16,13 +20,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountService {
     private final AccountMapper accountMapper;
+    private final AccountRepository accountRepository;
 
     public int join(AccountJoinReq req) {
 //        비밀번호 암호화
         String hashedPw = BCrypt.hashpw(req.getLoginPw(), BCrypt.gensalt());
 //        암호화가 된 비밀번호를 갖는 AccountJoinReq 객체 생성 (아이디, 이름도 포함)
         AccountJoinReq changedReq = new AccountJoinReq(req.getName(), req.getLoginId(), hashedPw);
-        return accountMapper.save(changedReq);
+        Members members = new Members();
+        members.setLoginId(req.getLoginId());
+        members.setLoginPw(hashedPw);
+        members.setName(req.getName());
+
+        members.addRole("ROLE_USER_1");
+
+        accountRepository.save(members);
+        //        return accountMapper.save(changedReq);
+    return 1;
     }
 
     public AccountLoginRes login(AccountLoginReq req) {
